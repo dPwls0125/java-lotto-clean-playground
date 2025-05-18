@@ -3,10 +3,10 @@ package view;
 import domain.LottoRank;
 import domain.UserLottos;
 import domain.YieldCalculator;
-import vo.Amount;
-import vo.ManualLottoCount;
-import vo.TicketCount;
-import vo.WinningResult;
+import domain.Amount;
+import domain.ManualLottoCount;
+import domain.TicketCount;
+import domain.WinningResult;
 
 public class OutputView {
 

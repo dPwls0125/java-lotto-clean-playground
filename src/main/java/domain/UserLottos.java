@@ -1,9 +1,5 @@
 package domain;
 
-import vo.Amount;
-import vo.WinningNumbers;
-import vo.WinningResult;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

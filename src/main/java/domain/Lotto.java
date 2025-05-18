@@ -1,7 +1,6 @@
 package domain;
 
 import exception.lotto.InvalidLottoLengthException;
-import vo.WinningNumbers;
 
 import java.util.ArrayList;
 import java.util.Collections;

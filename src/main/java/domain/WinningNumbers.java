@@ -1,6 +1,5 @@
-package vo;
+package domain;
 
-import domain.LottoNumber;
 import exception.lotto.InvalidLottoLengthException;
 import exception.lotto.InvalidLottoNumberRangeException;
 

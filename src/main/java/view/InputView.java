@@ -1,9 +1,9 @@
 package view;
 
-import vo.Amount;
-import vo.ManualLottoCount;
-import vo.TicketCount;
-import vo.WinningNumbers;
+import domain.Amount;
+import domain.ManualLottoCount;
+import domain.TicketCount;
+import domain.WinningNumbers;
 
 import java.util.*;
 

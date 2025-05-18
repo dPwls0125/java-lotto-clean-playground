@@ -3,8 +3,6 @@ package domain;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import vo.Amount;
-import vo.WinningNumbers;
 
 import java.util.List;
 import java.util.Map;

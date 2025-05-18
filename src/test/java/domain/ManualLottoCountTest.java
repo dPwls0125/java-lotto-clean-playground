@@ -1,5 +1,7 @@
-package vo;
+package domain;
 
+import domain.ManualLottoCount;
+import domain.TicketCount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

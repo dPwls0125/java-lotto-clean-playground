@@ -1,6 +1,4 @@
-package vo;
-
-import domain.LottoRank;
+package domain;
 
 import java.util.Collections;
 import java.util.HashMap;

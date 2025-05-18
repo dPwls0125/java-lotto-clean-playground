@@ -1,4 +1,4 @@
-package vo;
+package domain;
 
 public class ManualLottoCount {
     private final int value;

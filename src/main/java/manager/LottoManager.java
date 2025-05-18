@@ -1,14 +1,12 @@
 package manager;
 
-import domain.Lotto;
+import domain.*;
 import util.LottoFactory;
-import domain.UserLottos;
 import util.ManualNumberGenerator;
 import util.NumbersGenerator;
 import util.RandomNumbersGenerator;
 import view.InputView;
 import view.OutputView;
-import vo.*;
 
 import java.util.ArrayList;
 import java.util.List;

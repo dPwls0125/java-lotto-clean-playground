@@ -1,8 +1,6 @@
 package domain;
 
 import org.junit.jupiter.api.Test;
-import vo.Amount;
-import vo.WinningResult;
 
 import java.util.Map;
 

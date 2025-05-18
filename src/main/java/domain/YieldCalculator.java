@@ -1,6 +1,4 @@
 package domain;
-import vo.Amount;
-import vo.WinningResult;
 
 public class YieldCalculator {
 

@@ -10,12 +10,10 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import util.LottoFactory;
 import util.RandomNumbersGenerator;
-import vo.WinningNumbers;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import static constant.LottoConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
