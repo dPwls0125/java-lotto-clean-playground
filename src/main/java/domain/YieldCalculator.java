@@ -2,7 +2,6 @@ package domain;
 import vo.Amount;
 import vo.WinningResult;
 
-// Todo: Test 작성
 public class YieldCalculator {
 
     public static double calculateYield(WinningResult winningResult, Amount purchaseAmount) {

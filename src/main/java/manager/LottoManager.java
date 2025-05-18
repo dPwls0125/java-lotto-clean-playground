@@ -3,19 +3,19 @@ package manager;
 import domain.Lotto;
 import domain.LottoFactory;
 import domain.UserLottos;
+import util.ManualNumberGenerator;
+import util.NumbersGenerator;
+import util.RandomNumbersGenerator;
 import view.InputView;
 import view.OutputView;
-import vo.Amount;
-import vo.TicketCount;
-import vo.WinningNumbers;
-import vo.WinningResult;
+import vo.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LottoManager {
 
-    private final LottoFactory lottoFactory;
+    private LottoFactory lottoFactory;
+    private NumbersGenerator randomNumbersGenerator = new RandomNumbersGenerator();
 
     public LottoManager(LottoFactory lottoFactory) {
         this.lottoFactory = lottoFactory;
@@ -24,8 +24,13 @@ public class LottoManager {
     public UserLottos IssuingLottoTickets() {
         Amount amount = getTicketCountFromInput();
         TicketCount ticketCount = TicketCount.from(amount);
-        UserLottos userLottos = generateLottos(ticketCount ,amount);
-        printUserLottos(ticketCount,userLottos);
+        UserLottos userLottos = new UserLottos(amount);
+        // manual issuing
+        ManualLottoCount manualLottoCount = InputView.induceManulLottoCountToBeEntered(ticketCount);
+        generateManualLottosAndAddToUserLottos(manualLottoCount,userLottos);
+        // auto issuing
+        generateAutoLottosAndAddToUserLottos(ticketCount,userLottos);
+        printUserLottos(manualLottoCount,ticketCount,userLottos);
         return userLottos;
     }
 
@@ -39,16 +44,26 @@ public class LottoManager {
         return InputView.induceTheAmountToBeEntered();
     }
 
-    private UserLottos generateLottos(TicketCount ticketCount, Amount amount){
-        List<Lotto> issuedLottos = new ArrayList<>();
-        for(int i=0; i< ticketCount.getValue(); i++){
-            issuedLottos.add(lottoFactory.generateLotto());
+    private void generateManualLottosAndAddToUserLottos( ManualLottoCount manualLottoCount, UserLottos userLottos){
+        List<List<Integer>> manualLottosNumbers = InputView.readManualNumbers(manualLottoCount);
+
+        for(List<Integer> lottoNumbers : manualLottosNumbers){
+            lottoFactory.changeNumberGenerateStrategy(new ManualNumberGenerator(lottoNumbers));
+            userLottos.addUserLotto(lottoFactory.generateLotto());
         }
-        return new UserLottos(issuedLottos,amount);
     }
 
-    private void printUserLottos(TicketCount ticketCount, UserLottos userLottos){
-        OutputView.printNumberOfLottoes(ticketCount);
+
+    private void generateAutoLottosAndAddToUserLottos(TicketCount ticketCount,UserLottos userLottos){
+        lottoFactory.changeNumberGenerateStrategy(randomNumbersGenerator);
+
+        for(int i=0; i< ticketCount.getValue(); i++){
+            userLottos.addUserLotto(lottoFactory.generateLotto());
+        }
+    }
+
+    private void printUserLottos(ManualLottoCount manualLottoCount, TicketCount ticketCount, UserLottos userLottos){
+        OutputView.printNumberOfLottoes(manualLottoCount,ticketCount);
         OutputView.printIssuedLottoTickets(userLottos);
     }
 }

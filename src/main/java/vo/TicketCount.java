@@ -2,12 +2,18 @@ package vo;
 
 import java.util.Objects;
 
+import static constant.LottoConstants.LOTTO_PRICES_UNIT;
+
 public class TicketCount {
-    private final int value;
+    private int value;
 
     public TicketCount(final int value) {
         validatePositiveNumber(value);
         this.value = value;
+    }
+
+    public void subtractTicketCount(final ManualLottoCount manualLottoCount){
+        value -= manualLottoCount.getValue();
     }
 
     private void validatePositiveNumber(int value){
@@ -17,7 +23,7 @@ public class TicketCount {
     }
 
     public static TicketCount from(Amount amount) {
-        return new TicketCount(amount.getValue() / Amount.LOTTO_PRICES_UNIT);
+        return new TicketCount(amount.getValue() / LOTTO_PRICES_UNIT);
     }
 
     public int getValue(){

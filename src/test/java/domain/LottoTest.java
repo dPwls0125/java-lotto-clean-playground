@@ -31,7 +31,7 @@ public class LottoTest {
             lottoFactory = new LottoFactory(new RandomNumbersGenerator());
             Lotto lotto = lottoFactory.generateLotto();
             lotto.getLottoNumbers()
-                    .forEach(number -> assertThat(number).isBetween(1,45));
+                    .forEach(number -> assertThat(number.getValue()).isBetween(1,45));
         }
 
         @Test
@@ -106,4 +106,11 @@ public class LottoTest {
         );
     }
 
+    @Test
+    @DisplayName("로또에 중복된 숫자가 존재하면 예외를 발생시킨다.")
+    void whenDuplicatedNumbersAreInclude_thenThrowIllegalArgumentException(){
+        assertThatThrownBy(() -> new Lotto(List.of(1,1,2,3,4,5)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("로또에 중복된 번호가 포함되어 있습니다.");
+    }
 }

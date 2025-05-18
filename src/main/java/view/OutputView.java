@@ -4,12 +4,13 @@ import domain.LottoRank;
 import domain.UserLottos;
 import domain.YieldCalculator;
 import vo.Amount;
+import vo.ManualLottoCount;
 import vo.TicketCount;
 import vo.WinningResult;
 
 public class OutputView {
 
-    private static final String NOTICE_TICKET_COUNTS = "\n%d개를 구매했습니다.%n";
+    private static final String NOTICE_MANUAL_AUTO_TICKET_COUNTS = "\n수동으로 %d장, 자동으로 %d개를 구매했습니다.%n";
     private static final String NOTICE_WINNING_STATISTICS = "\n당첨 통계";
     private static final String TITLE_AND_CONTENT_DIVIDER = "---------";
     private static final String NOTICE_CORRESPOND_LOTTO_COUNT  = "%d개 일치 (%d원)- %d개%n";
@@ -18,8 +19,8 @@ public class OutputView {
     private static final String LOSS = "손해";
     private static final String PROFIT = "이익";
 
-    public static void printNumberOfLottoes(TicketCount ticketCount){
-        System.out.printf( (NOTICE_TICKET_COUNTS), ticketCount.getValue());
+    public static void printNumberOfLottoes(ManualLottoCount manualLottoCount, TicketCount ticketCount){
+        System.out.printf( (NOTICE_MANUAL_AUTO_TICKET_COUNTS), manualLottoCount.getValue(),ticketCount.getValue());
     }
 
     public static void printIssuedLottoTickets(UserLottos userLottos){

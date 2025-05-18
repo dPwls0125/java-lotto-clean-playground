@@ -1,25 +1,27 @@
 package vo;
 
+import domain.LottoNumber;
 import exception.lotto.InvalidLottoLengthException;
 import exception.lotto.InvalidLottoNumberRangeException;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static constant.LottoConstants.*;
 
 public class WinningNumbers  {
 
-    private final List<Integer> winningNumbers;
+    private final List<LottoNumber> winningNumbers;
 
-    private final int bonusNumber;
+    private final LottoNumber bonusNumber;
 
     public WinningNumbers(List<Integer> winningNumbers, int bonusNumber) {
-        this.bonusNumber = bonusNumber;
+        this.bonusNumber = new LottoNumber(bonusNumber);
         validateNumberNumberRange(winningNumbers);
         validateWinningNumbersCount(winningNumbers);
-        this.winningNumbers = winningNumbers;
+        this.winningNumbers = winningNumbers.stream().map(LottoNumber::new).collect(Collectors.toList());
     }
 
     private void validateWinningNumbersCount(final List<Integer> winningNumbers) {
@@ -36,11 +38,11 @@ public class WinningNumbers  {
                 });
     }
 
-    public List<Integer> getWinningNumbers() {
+    public List<LottoNumber> getWinningNumbers() {
         return Collections.unmodifiableList(winningNumbers);
     }
 
-    public int getBonusNumber() {
+    public LottoNumber getBonusNumber() {
         return bonusNumber;
     }
 

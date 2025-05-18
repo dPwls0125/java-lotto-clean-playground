@@ -2,16 +2,16 @@ package vo;
 
 import java.util.Objects;
 
-public class Amount {
+import static constant.LottoConstants.LOTTO_PRICES_UNIT;
 
-    public static final int LOTTO_PRICES_UNIT = 1_000;
+public class Amount {
     private final int value;
 
     public Amount(final int value) {
         if (value <= 0) {
             throw new IllegalArgumentException("금액은 0 또는 음수가 될 수 없습니다.");
         }
-        if (value % 1000 != 0) {
+        if (value % LOTTO_PRICES_UNIT != 0) {
             throw new InvalidAmountValueUnitExcpetion("로또는 1000원 단위로만 구매할 수 있습니다.");
         }
         this.value = value;
