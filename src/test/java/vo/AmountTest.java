@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static constant.LottoConstants.LOTTO_PRICES_UNIT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,20 +13,20 @@ public class AmountTest {
     @Test
     @DisplayName("유효한 값이 들어오면 Amount를 생성한다.")
     void whenValidInputCome_thenCreateAmount(){
-        Amount amount = new Amount(LOTTO_PRICES_UNIT * 5);
-        assertThat(amount.getValue()).isEqualTo(LOTTO_PRICES_UNIT * 5);
+        Amount amount = new Amount(5000);
+        assertThat(amount.getValue()).isEqualTo(5000);
     }
 
     @Test
     @DisplayName("1000원 단위가 아닌 경우 예외를 던진다.")
     void whenValueIsNotInThousandUnit_thenThrowsException() {
-        assertThatThrownBy(() -> new Amount(LOTTO_PRICES_UNIT - 1))
+        assertThatThrownBy(() -> new Amount(999))
                 .isInstanceOf(Amount.InvalidAmountValueUnitExcpetion.class);
     }
 
     @DisplayName("금액에 음수 또는 0의 값이 들어온 경우 예외를 던진다.")
     @ParameterizedTest(name = "value가 {0} => throw IllegalArgumentException")
-    @ValueSource(ints = {0,-1 * LOTTO_PRICES_UNIT,-2 * LOTTO_PRICES_UNIT})
+    @ValueSource(ints = {0,-1000,-2000})
     void whenValueIsNotPositive_thenThrowsException(int value){
         assertThatThrownBy(() -> new Amount(value))
                 .isInstanceOf(IllegalArgumentException.class);

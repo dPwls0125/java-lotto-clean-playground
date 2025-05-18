@@ -40,7 +40,7 @@ public class LottoTest {
         void whenLottoGeneratedByRandomNumbersGenerator_thenHasSixNmbers(){
             lottoFactory = new LottoFactory(new RandomNumbersGenerator());
             Lotto lotto = lottoFactory.generateLotto();
-            assertThat(lotto.getLottoNumbers().size()).isEqualTo(LOTTO_SIZE);
+            assertThat(lotto.getLottoNumbers().size()).isEqualTo(6);
 
         }
     }
