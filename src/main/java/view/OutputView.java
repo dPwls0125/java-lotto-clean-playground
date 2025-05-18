@@ -47,8 +47,7 @@ public class OutputView {
 
             int prize = rank.getPrize();
             int matchCount = rank.getMatchCount();
-            int count = winningResult.getValue().getOrDefault(rank, 0);
-
+            int count = winningResult.getCountOf(rank);
 
             System.out.printf(getFormattedRankLine(rank), matchCount, prize, count);
         }

@@ -26,6 +26,9 @@ public class WinningResult {
         return Collections.unmodifiableMap(result);
     }
 
+    public int getCountOf(LottoRank rank){
+        return result.getOrDefault(rank,0);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
