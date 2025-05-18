@@ -1,15 +1,16 @@
 package view;
 
 import vo.Amount;
+import vo.WinningNumbers;
 
-import java.util.InputMismatchException;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class InputView {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     private static final String ENTER_THE_AMOUNT = "구입금액을 입력해 주세요.";
+    private static final String ENTER_LAST_WINNING_NUMBERS = "지난 주 당첨 번호를 입력해 주세요.";
 
     public static Amount induceTheAmountToBeEntered(){
         Optional<Amount> optionalAmount = Optional.empty();
@@ -17,8 +18,15 @@ public class InputView {
             System.out.println(ENTER_THE_AMOUNT);
             optionalAmount = readAndReturnAmount();
         }
-
         return optionalAmount.get();
+    }
+
+    public static WinningNumbers induceTheWinningNumberToBeEntered(){
+        System.out.println(ENTER_LAST_WINNING_NUMBERS);
+        List<Integer> winningNumbersEntered = Arrays.stream(scanner.next().split(","))
+                .map(Integer::parseInt)
+                .toList();
+        return new WinningNumbers(winningNumbersEntered);
     }
 
     private static Optional<Amount> readAndReturnAmount(){

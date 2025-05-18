@@ -1,8 +1,8 @@
-package utils;
+package util;
 
 import java.util.*;
 
-import static domain.constant.LottoConstants.*;
+import static constant.LottoConstants.*;
 
 public class RandomNumbersGenerator implements NumbersGenerator{
     @Override

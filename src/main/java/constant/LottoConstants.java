@@ -1,4 +1,4 @@
-package domain.constant;
+package constant;
 
 public class LottoConstants {
     public static final int LOTTO_UPPER_BOUND = 45;

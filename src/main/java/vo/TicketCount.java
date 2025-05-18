@@ -16,6 +16,10 @@ public class TicketCount {
         }
     }
 
+    public static TicketCount from(Amount amount) {
+        return new TicketCount(amount.getValue() / Amount.LOTTO_PRICES_UNIT);
+    }
+
     public int getValue(){
         return value;
     }

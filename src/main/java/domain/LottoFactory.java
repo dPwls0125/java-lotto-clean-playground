@@ -1,6 +1,6 @@
 package domain;
 
-import utils.NumbersGenerator;
+import util.NumbersGenerator;
 
 public class LottoFactory {
     private final NumbersGenerator numbersGenerator;

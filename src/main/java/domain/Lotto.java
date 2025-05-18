@@ -2,11 +2,13 @@ package domain;
 
 import exception.lotto.InvalidLottoLengthException;
 import exception.lotto.InvalidLottoNumberRangeException;
+import vo.WinningNumbers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static domain.constant.LottoConstants.*;
+import static constant.LottoConstants.*;
 
 
 public class Lotto {
@@ -16,9 +18,17 @@ public class Lotto {
     public Lotto(final List<Integer> lottoNumbers) {
         validateLottoNumbersCount(lottoNumbers);
         validateNumberNumberRange(lottoNumbers);
-        this.lottoNumbers = lottoNumbers;
+        this.lottoNumbers = new ArrayList<>(lottoNumbers);
     }
-
+    public int countMatchedNumbers(WinningNumbers winningNumbers ){
+        int countMatchedNumber = 0;
+        for(Integer number : winningNumbers.getWinningNumbers()){
+            if(lottoNumbers.contains(number)){
+                ++countMatchedNumber;
+            }
+        }
+        return countMatchedNumber;
+    }
     private void validateNumberNumberRange(final List<Integer> lottoNumbers) {
         lottoNumbers
                 .forEach(number -> {

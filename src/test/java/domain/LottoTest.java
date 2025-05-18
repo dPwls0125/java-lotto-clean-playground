@@ -1,5 +1,5 @@
-import domain.Lotto;
-import domain.LottoFactory;
+package domain;
+
 import exception.lotto.InvalidLottoLengthException;
 import exception.lotto.InvalidLottoNumberRangeException;
 import org.junit.jupiter.api.DisplayName;
@@ -8,12 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import utils.RandomNumbersGenerator;
+import util.RandomNumbersGenerator;
+import vo.WinningNumbers;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-import static domain.constant.LottoConstants.*;
+import static constant.LottoConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -73,6 +74,27 @@ public class LottoTest {
                 Arguments.arguments(List.of(1,2,3,4,5)),
                 Arguments.arguments(List.of(1,2,3,4,5,6,7)),
                 Arguments.arguments(List.of())
+        );
+    }
+
+    @ParameterizedTest(name = "발급 받은 로또의 번호가 {0}이면 맞춘 번호의 갯수는 {1}이다.")
+    @MethodSource("lottoNumbersAndExpectedMatchCountWithWinningNumbers")
+    void whenFixedNumberIncludedLottoGenerated_thenCountMatchedNumberExactly(WinningNumbers winningNumbers, LottoFactory lottoFactory, int expectedMatchCount){
+        Lotto lotto = lottoFactory.generateLotto();
+        assertThat(lotto.countMatchedNumbers(winningNumbers)).isEqualTo(expectedMatchCount);
+    }
+
+    private static Stream<Arguments> lottoNumbersAndExpectedMatchCountWithWinningNumbers(){
+        WinningNumbers winningNumbers = new WinningNumbers(List.of(1,2,3,4,5,6));
+        return Stream.of(
+                Arguments.arguments(winningNumbers,new LottoFactory(()->List.of(1,2,3,4,5,6)),6),
+                Arguments.arguments(winningNumbers,new LottoFactory(()->List.of(2,3,4,5,6,7)),5),
+                Arguments.arguments(winningNumbers,new LottoFactory(()->List.of(3,4,5,6,7,8)),4),
+                Arguments.arguments(winningNumbers,new LottoFactory(()->List.of(4,5,6,7,8,9)),3),
+                Arguments.arguments(winningNumbers,new LottoFactory(()->List.of(5,6,7,8,9,10)),2),
+                Arguments.arguments(winningNumbers,new LottoFactory(()->List.of(6,7,8,9,10,11)),1),
+                Arguments.arguments(winningNumbers,new LottoFactory(()->List.of(7,8,9,10,11,12)),0),
+                Arguments.arguments(winningNumbers,new LottoFactory(()->List.of(8,9,10,11,12,13)),0)
         );
     }
 
