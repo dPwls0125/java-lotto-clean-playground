@@ -14,9 +14,10 @@ public class YieldCalculatorTest {
     void testCalculatingYield(){
         Map<LottoRank,Integer> WinningResultMap = Map.of(
                 LottoRank.FIRST, 1,
-                LottoRank.SECOND, 1,
+                LottoRank.SECOND, 0,
                 LottoRank.THIRD, 1,
                 LottoRank.FOURTH, 1,
+                LottoRank.FIFTH, 1,
                 LottoRank.NONE, 2
         );
 

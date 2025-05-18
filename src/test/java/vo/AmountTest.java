@@ -1,11 +1,9 @@
 package vo;
 
-import manager.LottoManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import vo.Amount;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -26,8 +24,8 @@ public class AmountTest {
                 .isInstanceOf(Amount.InvalidAmountValueUnitExcpetion.class);
     }
 
+    @DisplayName("금액에 음수 또는 0의 값이 들어온 경우 예외를 던진다.")
     @ParameterizedTest(name = "value가 {0} => throw IllegalArgumentException")
-    @DisplayName("음수 또는 0의 값의 경우 예외를 던진다.")
     @ValueSource(ints = {0,-1 * Amount.LOTTO_PRICES_UNIT,-2 * Amount.LOTTO_PRICES_UNIT})
     void whenValueIsNotPositive_thenThrowsException(int value){
         assertThatThrownBy(() -> new Amount(value))

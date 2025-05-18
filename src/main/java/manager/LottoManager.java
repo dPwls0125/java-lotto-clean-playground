@@ -36,8 +36,7 @@ public class LottoManager {
     }
 
     private Amount getTicketCountFromInput() {
-        Amount amount = InputView.induceTheAmountToBeEntered();
-        return amount;
+        return InputView.induceTheAmountToBeEntered();
     }
 
     private UserLottos generateLottos(TicketCount ticketCount, Amount amount){

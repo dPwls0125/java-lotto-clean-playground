@@ -13,14 +13,13 @@ public class WinningNumbers  {
 
     private final List<Integer> winningNumbers;
 
-    public WinningNumbers(List<Integer> winningNumbers) {
+    private final int bonusNumber;
+
+    public WinningNumbers(List<Integer> winningNumbers, int bonusNumber) {
+        this.bonusNumber = bonusNumber;
         validateNumberNumberRange(winningNumbers);
         validateWinningNumbersCount(winningNumbers);
         this.winningNumbers = winningNumbers;
-    }
-
-    public List<Integer> getWinningNumbers() {
-        return Collections.unmodifiableList(winningNumbers);
     }
 
     private void validateWinningNumbersCount(final List<Integer> winningNumbers) {
@@ -36,6 +35,15 @@ public class WinningNumbers  {
                     }
                 });
     }
+
+    public List<Integer> getWinningNumbers() {
+        return Collections.unmodifiableList(winningNumbers);
+    }
+
+    public int getBonusNumber() {
+        return bonusNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

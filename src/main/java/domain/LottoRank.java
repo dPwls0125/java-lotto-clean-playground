@@ -1,34 +1,32 @@
 package domain;
 
-import java.util.List;
-
-public class LottoRank {
-
-    public static final LottoRank FIRST = new LottoRank(6,2_000_000_000);
-    public static final LottoRank SECOND = new LottoRank(5,1_500_000);
-    public static final LottoRank THIRD = new LottoRank(4,50_000);
-    public static final LottoRank FOURTH  = new LottoRank(3,5_000);
-    public static final LottoRank NONE = new LottoRank(-1,0);
+public enum LottoRank {
+    FIFTH(3,5_000,false),
+    FOURTH(4,50_000,false),
+    THIRD(5,1_500_000,false),
+    SECOND(5,30_000_000,true),
+    FIRST(6,2_000_000_000,false),
+    NONE(-1,0,false);
 
     private final int matchCount;
     private final int prize;
+    private final boolean isBonusNecessary;
 
-    public LottoRank(int matchCount, int prize) {
+    LottoRank(int matchCount, int prize, boolean isBonusNecessary) {
         this.matchCount = matchCount;
         this.prize = prize;
+        this.isBonusNecessary = isBonusNecessary;
     }
 
-    public static LottoRank match(int matchCount){
+    public static LottoRank match(int matchCount, boolean bonus){
         if (matchCount == 6) return FIRST;
-        if (matchCount == 5) return SECOND;
-        if (matchCount == 4) return THIRD;
-        if (matchCount == 3) return FOURTH;
+        if (matchCount == 5 && bonus) return SECOND;
+        if (matchCount == 5 && !bonus) return THIRD;
+        if (matchCount == 4) return FOURTH;
+        if (matchCount == 3) return FIFTH;
         return NONE;
     }
 
-    public static List<LottoRank> values(){
-        return List.of(FIRST,SECOND,THIRD,FOURTH,NONE);
-    }
 
     public int getMatchCount() {
         return matchCount;
@@ -36,5 +34,9 @@ public class LottoRank {
 
     public int getPrize() {
         return prize;
+    }
+
+    public boolean isBonusNecessary() {
+        return isBonusNecessary;
     }
 }

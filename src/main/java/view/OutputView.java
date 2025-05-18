@@ -13,6 +13,7 @@ public class OutputView {
     private static final String NOTICE_WINNING_STATISTICS = "\n당첨 통계";
     private static final String TITLE_AND_CONTENT_DIVIDER = "---------";
     private static final String NOTICE_CORRESPOND_LOTTO_COUNT  = "%d개 일치 (%d원)- %d개%n";
+    private static final String NOTICE_CORRESPOND_LOTTO_COUNT_AND_BONUS  = "%d개 일치, 보너스 볼 일치 (%d원)- %d개%n";
     private static final String NOTICE_TOTAL_PROFIT = "총 수익률은 %.2f입니다.(기준이 1이기 때문에 결과적으로 %s(이)라는 의미임)%n";
     private static final String LOSS = "손해";
     private static final String PROFIT = "이익";
@@ -47,12 +48,20 @@ public class OutputView {
             int matchCount = rank.getMatchCount();
             int count = winningResult.getValue().getOrDefault(rank, 0);
 
-            System.out.printf(NOTICE_CORRESPOND_LOTTO_COUNT, matchCount, prize, count);
+
+            System.out.printf(getFormattedRankLine(rank), matchCount, prize, count);
         }
     }
     private static void printWinningStatistics(WinningResult winningResult, Amount purchaseAmount) {
         double yield = YieldCalculator.calculateYield(winningResult, purchaseAmount);
         System.out.printf(NOTICE_TOTAL_PROFIT, yield, getLossOrProfit(yield));
+    }
+
+    private static String getFormattedRankLine(LottoRank rank) {
+        if (rank == LottoRank.SECOND) {
+            return NOTICE_CORRESPOND_LOTTO_COUNT_AND_BONUS;
+        }
+        return NOTICE_CORRESPOND_LOTTO_COUNT;
     }
 
 }

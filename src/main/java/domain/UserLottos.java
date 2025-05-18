@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static constant.LottoConstants.BONUS_MATCH_REQUIRED_COUNT;
+
 public class UserLottos {
 
     private final List<Lotto> userLottos;
@@ -17,11 +19,26 @@ public class UserLottos {
         this.purchaseAmount = purchaseAmount;
     }
 
-    public WinningResult getWinningResult(WinningNumbers winningNumbers){
+    public WinningResult getWinningResult(WinningNumbers winningNumbers) {
         WinningResult winningResult = new WinningResult();
-        userLottos.forEach(lotto -> winningResult
-                .addResult(LottoRank.match(lotto.countMatchedNumbers(winningNumbers))));
+        for (Lotto lotto : userLottos) {
+            LottoRank rank = evaluateRank(lotto, winningNumbers);
+            winningResult.addResult(rank);
+        }
         return winningResult;
+    }
+
+    private LottoRank evaluateRank(Lotto lotto, WinningNumbers winningNumbers) {
+        int matchCount = lotto.countMatchedNumbers(winningNumbers);
+        boolean bonusMatched = isBonusMatched(matchCount, lotto, winningNumbers);
+        return LottoRank.match(matchCount, bonusMatched);
+    }
+
+    private boolean isBonusMatched(int matchCount, Lotto lotto, WinningNumbers winningNumbers) {
+        if (matchCount != BONUS_MATCH_REQUIRED_COUNT) {
+            return false;
+        }
+        return lotto.isContainBonusBallNumber(winningNumbers);
     }
 
     public List<Lotto> getUserLottos() {

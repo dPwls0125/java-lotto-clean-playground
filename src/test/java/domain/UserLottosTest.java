@@ -27,7 +27,7 @@ public class UserLottosTest {
                 new Lotto(List.of(6,7,8,9,10,11))
         );
         userLottos = new UserLottos(lottos,amount);
-        winningNumbers = new WinningNumbers(List.of(1,2,3,4,5,6));
+        winningNumbers = new WinningNumbers(List.of(1,2,3,4,5,6), 7);
     }
 
 
@@ -37,8 +37,8 @@ public class UserLottosTest {
         Map<LottoRank,Integer> expectedResult = Map.of(
                 LottoRank.FIRST, 1,
                 LottoRank.SECOND, 1,
-                LottoRank.THIRD, 1,
                 LottoRank.FOURTH, 1,
+                LottoRank.FIFTH, 1,
                 LottoRank.NONE, 2
         );
 

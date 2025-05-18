@@ -29,6 +29,10 @@ public class Lotto {
         }
         return countMatchedNumber;
     }
+
+    public boolean isContainBonusBallNumber(WinningNumbers winningNumbers){
+        return lottoNumbers.contains(winningNumbers.getBonusNumber());
+    }
     private void validateNumberNumberRange(final List<Integer> lottoNumbers) {
         lottoNumbers
                 .forEach(number -> {
