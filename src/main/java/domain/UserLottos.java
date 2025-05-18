@@ -14,18 +14,17 @@ public class UserLottos {
 
     private final List<Lotto> userLottos;
     private final Amount purchaseAmount;
-    public UserLottos(Amount purchaseAmount){
-        this.userLottos = new ArrayList<>();
+    public UserLottos(List<Lotto> lottos,Amount purchaseAmount){
+        this.userLottos = new ArrayList<>(lottos);
         this.purchaseAmount = purchaseAmount;
     }
-
-    public void addUserLotto(Lotto lotto){
-        userLottos.add(lotto);
+    public static UserLottos of(List<Lotto> manualLottos, List<Lotto> autoLottos, Amount purchaseAmount){
+        List<Lotto> lottos = new ArrayList<>();
+        lottos.addAll(manualLottos);
+        lottos.addAll(autoLottos);
+        return new UserLottos(lottos,purchaseAmount);
     }
 
-    public void addUserLottos(List<Lotto> lottos){
-        userLottos.addAll(lottos);
-    }
     public WinningResult getWinningResult(WinningNumbers winningNumbers) {
         WinningResult winningResult = new WinningResult();
         for (Lotto lotto : userLottos) {

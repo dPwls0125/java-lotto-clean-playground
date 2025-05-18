@@ -3,6 +3,7 @@ package domain;
 import exception.lotto.InvalidLottoLengthException;
 import vo.WinningNumbers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class Lotto {
     public Lotto(final List<Integer> lottoNumbers) {
         validateLottoNumbersCount(lottoNumbers);
         validateLottoNumberIncludesDuplicateNumber(lottoNumbers);
-        this.lottoNumbers = lottoNumbers.stream().map(LottoNumber::new).collect(Collectors.toList());
+        this.lottoNumbers = new ArrayList<>(lottoNumbers.stream().map(LottoNumber::new).collect(Collectors.toList()));
     }
     public int countMatchedNumbers(WinningNumbers winningNumbers ){
         int countMatchedNumber = 0;

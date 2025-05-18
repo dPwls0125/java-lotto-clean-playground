@@ -1,4 +1,4 @@
-import domain.LottoFactory;
+import util.LottoFactory;
 import domain.UserLottos;
 import manager.LottoManager;
 import util.RandomNumbersGenerator;
