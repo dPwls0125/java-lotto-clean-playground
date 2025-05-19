@@ -1,8 +1,8 @@
 package domain;
 
-import java.util.Objects;
+import constant.LottoConstants;
 
-import static constant.LottoConstants.LOTTO_PRICES_UNIT;
+import java.util.Objects;
 
 public class Amount {
     private final int value;
@@ -11,7 +11,7 @@ public class Amount {
         if (value <= 0) {
             throw new IllegalArgumentException("금액은 0 또는 음수가 될 수 없습니다.");
         }
-        if (value % LOTTO_PRICES_UNIT != 0) {
+        if (value % LottoConstants.LOTTO_PRICES_UNIT != 0) {
             throw new InvalidAmountValueUnitExcpetion("로또는 1000원 단위로만 구매할 수 있습니다.");
         }
         this.value = value;

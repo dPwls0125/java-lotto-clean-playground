@@ -1,8 +1,8 @@
 package domain;
 
-import java.util.Objects;
+import constant.LottoConstants;
 
-import static constant.LottoConstants.LOTTO_PRICES_UNIT;
+import java.util.Objects;
 
 public class TicketCount {
     private int value;
@@ -12,21 +12,21 @@ public class TicketCount {
         this.value = value;
     }
 
-    public void subtractTicketCount(final ManualLottoCount manualLottoCount){
+    public void subtractTicketCount(final ManualLottoCount manualLottoCount) {
         value -= manualLottoCount.getValue();
     }
 
-    private void validatePositiveNumber(int value){
-        if(value <= 0) {
+    private void validatePositiveNumber(int value) {
+        if (value <= 0) {
             throw new IllegalArgumentException("티켓의 갯수는 0 또는 음수가 될 수 없습니다.");
         }
     }
 
     public static TicketCount from(Amount amount) {
-        return new TicketCount(amount.getValue() / LOTTO_PRICES_UNIT);
+        return new TicketCount(amount.getValue() / LottoConstants.LOTTO_PRICES_UNIT);
     }
 
-    public int getValue(){
+    public int getValue() {
         return value;
     }
 

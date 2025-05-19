@@ -1,13 +1,12 @@
 package domain;
 
+import constant.LottoConstants;
 import exception.lotto.InvalidLottoLengthException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static constant.LottoConstants.*;
 
 
 public class Lotto {
@@ -22,7 +21,7 @@ public class Lotto {
 
     public int countMatchedNumbers(WinningNumbers winningNumbers) {
         int countMatchedNumber = 0;
-        for (LottoNumber number : winningNumbers.getWinningNumbers()) {
+        for (LottoNumber number : winningNumbers.getWinningLotto().getLottoNumbers()) {
             if (lottoNumbers.contains(number)) {
                 ++countMatchedNumber;
             }
@@ -35,7 +34,7 @@ public class Lotto {
     }
 
     private void validateLottoNumbersCount(final List<Integer> lottoNumbers) {
-        if (lottoNumbers.size() != LOTTO_SIZE) {
+        if (lottoNumbers.size() != LottoConstants.LOTTO_SIZE) {
             throw new InvalidLottoLengthException("로또가 가질 수 있는 숫자의 갯수는 6개입니다.");
         }
     }

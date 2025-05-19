@@ -19,12 +19,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class LottoTest {
-    private LottoFactory lottoFactory;
+    private LottoFactory lottoFactory = new LottoFactory(new RandomNumbersGenerator());
 
     @Nested
     @DisplayName("자동 발급 랜덤 로또 테스트")
     class RandomGeneratedLottoTest {
-        private LottoFactory lottoFactory = new LottoFactory(new RandomNumbersGenerator());
 
         @Test
         @DisplayName("랜덤으로 발급받은 로또의 범위는 1~45를 만족한다.")
@@ -40,8 +39,7 @@ public class LottoTest {
         void whenLottoGeneratedByRandomNumbersGenerator_thenHasSixNmbers() {
             lottoFactory = new LottoFactory(new RandomNumbersGenerator());
             Lotto lotto = lottoFactory.generateLotto();
-            assertThat(lotto.getLottoNumbers().size()).isEqualTo(6);
-
+            assertThat(lotto.getLottoNumbers()).hasSize(6);
         }
     }
 

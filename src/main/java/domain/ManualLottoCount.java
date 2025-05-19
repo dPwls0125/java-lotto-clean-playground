@@ -13,7 +13,7 @@ public class ManualLottoCount {
             throw new IllegalArgumentException("수동 구매 수는 0 이상이어야 합니다.");
         }
         if (value > ticketCount.getValue()) {
-            throw new IllegalArgumentException("구입 금액을 초과한 수동 구매 수입니다.");
+            throw new IllegalArgumentException("구입 가능 갯수을 초과한 수동 구매 수입니다.");
         }
     }
 

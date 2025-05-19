@@ -1,11 +1,9 @@
 package domain;
 
+import constant.LottoConstants;
 import exception.lotto.InvalidLottoNumberRangeException;
 
 import java.util.Objects;
-
-import static constant.LottoConstants.LOTTO_LOWER_BOUND;
-import static constant.LottoConstants.LOTTO_UPPER_BOUND;
 
 public class LottoNumber {
 
@@ -17,8 +15,8 @@ public class LottoNumber {
     }
 
     private void validateNumberRange(int number) {
-        if(!(number >= LOTTO_LOWER_BOUND && number <= LOTTO_UPPER_BOUND)){
-            throw new InvalidLottoNumberRangeException(String.format("%d는 허용되지 않는 범위의 숫자입니다.",number));
+        if (number < LottoConstants.LOTTO_LOWER_BOUND || number > LottoConstants.LOTTO_UPPER_BOUND) {
+            throw new InvalidLottoNumberRangeException(String.format("%d는 허용되지 않는 범위의 숫자입니다.", number));
         }
     }
 
