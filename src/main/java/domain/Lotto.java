@@ -19,28 +19,29 @@ public class Lotto {
         validateLottoNumberIncludesDuplicateNumber(lottoNumbers);
         this.lottoNumbers = new ArrayList<>(lottoNumbers.stream().map(LottoNumber::new).collect(Collectors.toList()));
     }
-    public int countMatchedNumbers(WinningNumbers winningNumbers ){
+
+    public int countMatchedNumbers(WinningNumbers winningNumbers) {
         int countMatchedNumber = 0;
-        for(LottoNumber number : winningNumbers.getWinningNumbers()){
-            if(lottoNumbers.contains(number)){
+        for (LottoNumber number : winningNumbers.getWinningNumbers()) {
+            if (lottoNumbers.contains(number)) {
                 ++countMatchedNumber;
             }
         }
         return countMatchedNumber;
     }
 
-    public boolean isContainBonusBallNumber(WinningNumbers winningNumbers){
+    public boolean isContainBonusBallNumber(WinningNumbers winningNumbers) {
         return lottoNumbers.contains(winningNumbers.getBonusNumber());
     }
 
     private void validateLottoNumbersCount(final List<Integer> lottoNumbers) {
-        if (lottoNumbers.size() != LOTTO_SIZE){
+        if (lottoNumbers.size() != LOTTO_SIZE) {
             throw new InvalidLottoLengthException("로또가 가질 수 있는 숫자의 갯수는 6개입니다.");
         }
     }
 
-    private void validateLottoNumberIncludesDuplicateNumber(final List<Integer> lottoNumbers){
-        if(lottoNumbers.stream().distinct().count() != lottoNumbers.size()){
+    private void validateLottoNumberIncludesDuplicateNumber(final List<Integer> lottoNumbers) {
+        if (lottoNumbers.stream().distinct().count() != lottoNumbers.size()) {
             throw new IllegalArgumentException("로또에 중복된 번호가 포함되어 있습니다.");
         }
     }
@@ -50,7 +51,7 @@ public class Lotto {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return lottoNumbers.toString();
     }
 }
