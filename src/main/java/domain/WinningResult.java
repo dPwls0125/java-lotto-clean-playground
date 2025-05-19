@@ -29,6 +29,14 @@ public class WinningResult {
         return result.getOrDefault(rank, 0);
     }
 
+    public double getYield(Amount purchasedAmount) {
+        return YieldCalculator.calculateYield(this, purchasedAmount);
+    }
+
+    public boolean getIsItLoss(double yield) {
+        return YieldCalculator.isLoss(yield);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

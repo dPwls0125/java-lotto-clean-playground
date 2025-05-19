@@ -1,7 +1,6 @@
 package view;
 
 import domain.Amount;
-import domain.ManualLottoCount;
 import domain.TicketCount;
 import domain.WinningNumbers;
 
@@ -17,26 +16,26 @@ public class InputView {
     private static final String ENTER_MANUAL_LOTTO_COUNT = "수동으로 구매할 로또 수를 입력해 주세요.";
     private static final String ENTER_MANUAL_LOTTO_NUMBERS = "수동으로 구매할 번호를 입력해 주세요";
 
-    public static Amount induceTheAmountToBeEntered(){
+    public static Amount induceTheAmountToBeEntered() {
         Optional<Amount> optionalAmount = Optional.empty();
-        while(optionalAmount.isEmpty()){
+        while (optionalAmount.isEmpty()) {
             System.out.println(ENTER_THE_AMOUNT);
             optionalAmount = readAndReturnAmount();
         }
         return optionalAmount.get();
     }
 
-    public static ManualLottoCount induceManulLottoCountToBeEntered(TicketCount ticketCount){
-        Optional<ManualLottoCount> optionalCount = Optional.empty();
-        while(optionalCount.isEmpty()){
+    public static TicketCount induceManulLottoCountToBeEntered(TicketCount purchasedticketCount) {
+        Optional<TicketCount> manualLottoCount = Optional.empty();
+        while (manualLottoCount.isEmpty()) {
             System.out.println(ENTER_MANUAL_LOTTO_COUNT);
-            optionalCount = readAndReturnManualLottoCount(ticketCount);
+            manualLottoCount = readAndReturnManualLottoCount();
         }
-        ticketCount.subtractTicketCount(optionalCount.get());
-        return optionalCount.get();
+        purchasedticketCount.subtractTicketCount(manualLottoCount.get());
+        return manualLottoCount.get();
     }
 
-    public static List<List<Integer>> readManualNumbers(ManualLottoCount count) {
+    public static List<List<Integer>> readManualLottoNumbers(TicketCount count) {
         System.out.println(ENTER_MANUAL_LOTTO_NUMBERS);
         List<List<Integer>> manualNumbers = new ArrayList<>();
         for (int i = 0; i < count.getValue(); i++) {
@@ -50,7 +49,7 @@ public class InputView {
         return manualNumbers;
     }
 
-    public static WinningNumbers induceTheWinningNumberToBeEntered(){
+    public static WinningNumbers induceTheWinningNumberToBeEntered() {
         System.out.println(ENTER_LAST_WINNING_NUMBERS);
         List<Integer> winningNumbersEntered = Arrays.stream(scanner.next().split(","))
                 .map(Integer::parseInt)
@@ -60,31 +59,31 @@ public class InputView {
         return new WinningNumbers(winningNumbersEntered, bonusBall);
     }
 
-    private static Optional<Amount> readAndReturnAmount(){
+    private static Optional<Amount> readAndReturnAmount() {
         try {
             int input = scanner.nextInt();
             Amount amount = new Amount(input);
             return Optional.of(amount);
-        }catch (InputMismatchException e) {
+        } catch (InputMismatchException e) {
             printMessageAndClearBuffer("금액을 숫자로 입력해 주세요");
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             printMessageAndClearBuffer(e.getMessage());
         }
         return Optional.empty();
     }
 
-    private static Optional<ManualLottoCount> readAndReturnManualLottoCount(TicketCount ticketCount){
-        try{
+    private static Optional<TicketCount> readAndReturnManualLottoCount() {
+        try {
             int count = scanner.nextInt();
             scanner.nextLine();
-            return Optional.of(new ManualLottoCount(count,ticketCount));
-        } catch(IllegalArgumentException e){
+            return Optional.of(new TicketCount(count));
+        } catch (IllegalArgumentException e) {
             printMessageAndClearBuffer(e.getMessage());
         }
         return Optional.empty();
     }
 
-    private static void printMessageAndClearBuffer(String message){
+    private static void printMessageAndClearBuffer(String message) {
         System.out.println(message);
         scanner.nextLine();
     }

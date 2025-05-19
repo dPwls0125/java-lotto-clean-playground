@@ -8,15 +8,19 @@ public class TicketCount {
     private int value;
 
     public TicketCount(final int value) {
-        validatePositiveNumber(value);
+        validateNumberLowerBound(value);
         this.value = value;
     }
 
-    public void subtractTicketCount(final ManualLottoCount manualLottoCount) {
-        value -= manualLottoCount.getValue();
+    public void subtractTicketCount(TicketCount ticketCount) {
+        int substractResult = value - ticketCount.getValue();
+        if (substractResult < 0) {
+            throw new IllegalArgumentException("차감 가능한 티켓의 갯수를 초과했습니다.");
+        }
+        this.value = substractResult;
     }
 
-    private void validatePositiveNumber(int value) {
+    private void validateNumberLowerBound(int value) {
         if (value <= 0) {
             throw new IllegalArgumentException("티켓의 갯수는 0 또는 음수가 될 수 없습니다.");
         }
