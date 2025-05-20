@@ -49,17 +49,17 @@ public class UserLottos {
         private List<Lotto> autoLottos;
         private Amount purchaseAmount;
 
-        public Builder manualLottos(final List<Lotto> manualLottos) {
+        public Builder manualLottos(List<Lotto> manualLottos) {
             this.manualLottos = manualLottos;
             return this;
         }
 
-        public Builder autoLottos(final List<Lotto> autoLottos) {
+        public Builder autoLottos(List<Lotto> autoLottos) {
             this.autoLottos = autoLottos;
             return this;
         }
 
-        public Builder purchaseAmount(final Amount amount) {
+        public Builder purchaseAmount(Amount amount) {
             this.purchaseAmount = amount;
             return this;
         }
