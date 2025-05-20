@@ -9,16 +9,8 @@ public class WinningResult {
 
     private final Map<LottoRank, Integer> result;
 
-    public WinningResult() {
-        this.result = new HashMap<>();
-    }
-
     public WinningResult(final Map<LottoRank, Integer> resultMap) {
         this.result = new HashMap<>(resultMap);
-    }
-
-    public void addResult(LottoRank rank) {
-        result.put(rank, result.getOrDefault(rank, 0) + 1);
     }
 
     public Map<LottoRank, Integer> getValue() {

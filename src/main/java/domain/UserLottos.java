@@ -2,9 +2,7 @@ package domain;
 
 import constant.LottoConstants;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 public class UserLottos {
@@ -25,12 +23,12 @@ public class UserLottos {
     }
 
     public WinningResult getWinningResult(WinningNumbers winningNumbers) {
-        WinningResult winningResult = new WinningResult();
+        Map<LottoRank, Integer> result = new HashMap<>();
         for (Lotto lotto : userLottos) {
             LottoRank rank = evaluateRank(lotto, winningNumbers);
-            winningResult.addResult(rank);
+            result.put(rank, result.getOrDefault(rank, 0) + 1);
         }
-        return winningResult;
+        return new WinningResult(result);
     }
 
     private LottoRank evaluateRank(Lotto lotto, WinningNumbers winningNumbers) {
