@@ -10,7 +10,7 @@ public class UserLottos {
     private final List<Lotto> userLottos;
     private final Amount purchaseAmount;
 
-    public UserLottos(List<Lotto> lottos, Amount purchaseAmount) {
+    private UserLottos(List<Lotto> lottos, Amount purchaseAmount) {
         this.userLottos = new ArrayList<>(lottos);
         this.purchaseAmount = purchaseAmount;
     }
@@ -21,6 +21,7 @@ public class UserLottos {
         lottos.addAll(autoLottos);
         return new UserLottos(lottos, purchaseAmount);
     }
+
 
     public WinningResult getWinningResult(WinningNumbers winningNumbers) {
         Map<LottoRank, Integer> result = new HashMap<>();
@@ -50,5 +51,38 @@ public class UserLottos {
 
     public Amount getPurchaseAmount() {
         return purchaseAmount;
+    }
+    
+    public static class Builder {
+        private List<Lotto> manualLottos;
+        private List<Lotto> autoLottos;
+        private Amount purchaseAmount;
+
+        public Builder manualLottos(List<Lotto> manualLottos) {
+            this.manualLottos = manualLottos;
+            return this;
+        }
+
+        public Builder autoLottos(List<Lotto> autoLottos) {
+            this.autoLottos = autoLottos;
+            return this;
+        }
+
+        public Builder purchaseAmount(Amount amount) {
+            this.purchaseAmount = amount;
+            return this;
+        }
+
+        public UserLottos build() {
+            List<Lotto> mergedLottoList = new ArrayList<>();
+            mergedLottoList.addAll(this.manualLottos);
+            mergedLottoList.addAll(this.autoLottos);
+            return new UserLottos(mergedLottoList, this.purchaseAmount);
+        }
+
+        public static Builder builder() {
+            return new Builder();
+        }
+
     }
 }

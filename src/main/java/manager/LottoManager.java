@@ -29,7 +29,11 @@ public class LottoManager {
         // auto issuing
         List<Lotto> autoLottos = generateAutoLottos(purchasedTicketCount);
 
-        UserLottos userLottos = UserLottos.of(manualLottos, autoLottos, amount);
+        UserLottos userLottos = UserLottos.Builder.builder()
+                .manualLottos(manualLottos)
+                .autoLottos(autoLottos)
+                .purchaseAmount(amount).build();
+
         printUserLottos(manualLottoCount, purchasedTicketCount, userLottos);
         return userLottos;
     }

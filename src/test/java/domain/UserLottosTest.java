@@ -14,25 +14,33 @@ public class UserLottosTest {
     private static WinningNumbers winningNumbers;
 
     @BeforeAll
-    static void setUserLottos(){
+    static void setUserLottos() {
         Amount amount = new Amount(6000);
-        List<Lotto> lottos = List.of(
-                new Lotto(List.of(1,2,3,4,5,6)),
-                new Lotto(List.of(2,3,4,5,6,7)),
-                new Lotto(List.of(3,4,5,6,7,8)),
-                new Lotto(List.of(4,5,6,7,8,9)),
-                new Lotto(List.of(5,6,7,8,9,10)),
-                new Lotto(List.of(6,7,8,9,10,11))
+
+        List<Lotto> manualLottos = List.of(
+                new Lotto(List.of(1, 2, 3, 4, 5, 6)),
+                new Lotto(List.of(2, 3, 4, 5, 6, 7))
         );
-        userLottos = new UserLottos(lottos,amount);
-        winningNumbers = new WinningNumbers(List.of(1,2,3,4,5,6), 7);
+
+        List<Lotto> autoLottos = List.of(
+                new Lotto(List.of(3, 4, 5, 6, 7, 8)),
+                new Lotto(List.of(4, 5, 6, 7, 8, 9)),
+                new Lotto(List.of(5, 6, 7, 8, 9, 10)),
+                new Lotto(List.of(6, 7, 8, 9, 10, 11))
+        );
+
+        userLottos = UserLottos.Builder.builder()
+                .manualLottos(manualLottos)
+                .autoLottos(autoLottos)
+                .purchaseAmount(amount).build();
+
+        winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6), 7);
     }
-
-
+    
     @Test
     @DisplayName("userLottos의 getWinningResult() 메서드는, 유저가 소유한 로또의 당첨 결과를 반환한다.")
-    void whenGivenFixedNumbersLotto_thenGetCorrespondingWinningResult(){
-        Map<LottoRank,Integer> expectedResult = Map.of(
+    void whenGivenFixedNumbersLotto_thenGetCorrespondingWinningResult() {
+        Map<LottoRank, Integer> expectedResult = Map.of(
                 LottoRank.FIRST, 1,
                 LottoRank.SECOND, 1,
                 LottoRank.FOURTH, 1,
@@ -42,7 +50,6 @@ public class UserLottosTest {
 
         assertThat(userLottos.getWinningResult(winningNumbers).getValue()).isEqualTo(expectedResult);
     }
-
 
 
 }
