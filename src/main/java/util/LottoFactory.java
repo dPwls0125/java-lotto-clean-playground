@@ -1,19 +1,16 @@
 package util;
 
 import domain.Lotto;
-import util.NumbersGenerator;
+
+import java.util.List;
 
 public class LottoFactory {
-    private NumbersGenerator numbersGenerator;
 
-    public LottoFactory(NumbersGenerator numbersGenerator) {
-        this.numbersGenerator = numbersGenerator;
+    public static Lotto generateAutoLotto() {
+        return new Lotto(RandomNumbersGenerator.generateSixLottoNumbers());
     }
 
-    public void changeNumberGenerateStrategy(NumbersGenerator numbersGenerator){
-        this.numbersGenerator = numbersGenerator;
-    }
-    public Lotto generateLotto(){
-        return new Lotto(numbersGenerator.generateSixLottoNumbers());
+    public static Lotto generateManualLotto(final List<Integer> lottoNumbers) {
+        return new Lotto(lottoNumbers);
     }
 }

@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import util.LottoFactory;
-import util.RandomNumbersGenerator;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -19,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class LottoTest {
-    private LottoFactory lottoFactory = new LottoFactory(new RandomNumbersGenerator());
 
     @Nested
     @DisplayName("자동 발급 랜덤 로또 테스트")
@@ -28,8 +26,7 @@ public class LottoTest {
         @Test
         @DisplayName("랜덤으로 발급받은 로또의 범위는 1~45를 만족한다.")
         void whenLottoGeneratedByRandomNumbersGenerator_thenEachNumberBetweenUpperAndLowerBounds() {
-            lottoFactory = new LottoFactory(new RandomNumbersGenerator());
-            Lotto lotto = lottoFactory.generateLotto();
+            Lotto lotto = LottoFactory.generateAutoLotto();
             lotto.getLottoNumbers()
                     .forEach(number -> assertThat(number.getValue()).isBetween(1, 45));
         }
@@ -37,8 +34,7 @@ public class LottoTest {
         @Test
         @DisplayName("랜덤으로 발급받은 로또의 숫자 갯수는 6개이다.")
         void whenLottoGeneratedByRandomNumbersGenerator_thenHasSixNmbers() {
-            lottoFactory = new LottoFactory(new RandomNumbersGenerator());
-            Lotto lotto = lottoFactory.generateLotto();
+            Lotto lotto = LottoFactory.generateAutoLotto();
             assertThat(lotto.getLottoNumbers()).hasSize(6);
         }
     }
@@ -47,8 +43,8 @@ public class LottoTest {
     @ParameterizedTest(name = "발급 받은 로또에 {1} 포함이면 throws InvalideLottoNumberRangeException")
     @MethodSource("invalidNumberIncludedLottos")
     void whenNumberOutOfBounds_thenThrowRuntimeException(List<Integer> invalidLottoNumbers, int cause) {
-        lottoFactory = new LottoFactory(() -> invalidLottoNumbers);
-        assertThatThrownBy(lottoFactory::generateLotto)
+
+        assertThatThrownBy(() -> LottoFactory.generateManualLotto(invalidLottoNumbers))
                 .isInstanceOf(InvalidLottoNumberRangeException.class)
                 .hasMessage(String.format("%d는 허용되지 않는 범위의 숫자입니다.", cause));
 
@@ -66,8 +62,7 @@ public class LottoTest {
     @ParameterizedTest(name = "발급 받은 로또가 {0}이면 사이즈를 벗어난다.")
     @MethodSource("invalidLengthLottos")
     void whenLottoSizeOutOfBound_thenThrowRuntimeException(List<Integer> invalidLottoNumbers) {
-        lottoFactory = new LottoFactory(() -> invalidLottoNumbers);
-        assertThatThrownBy(lottoFactory::generateLotto)
+        assertThatThrownBy(() -> LottoFactory.generateManualLotto(invalidLottoNumbers))
                 .isInstanceOf(InvalidLottoLengthException.class);
     }
 
@@ -82,8 +77,7 @@ public class LottoTest {
     @ParameterizedTest
     @DisplayName("발급 받은 로또의 번호에 따라 맞춘 번호의 갯수와 bonus 볼 성공 여부를 적절히 구한다.")
     @MethodSource("lottoNumbersAndExpectedMatchCountWithWinningNumbers")
-    void whenFixedNumberIncludedLottoGenerated_thenCountMatchedNumberExactly(WinningNumbers winningNumbers, LottoFactory lottoFactory, int expectedMatchCount, boolean expectedIsIncludeBonusNumber) {
-        Lotto lotto = lottoFactory.generateLotto();
+    void whenFixedNumberIncludedLottoGenerated_thenCountMatchedNumberExactly(WinningNumbers winningNumbers, Lotto lotto, int expectedMatchCount, boolean expectedIsIncludeBonusNumber) {
         assertAll(
                 () -> assertThat(lotto.countMatchedNumbers(winningNumbers)).isEqualTo(expectedMatchCount),
                 () -> assertThat(lotto.isContainBonusBallNumber(winningNumbers)).isEqualTo(expectedIsIncludeBonusNumber)
@@ -94,14 +88,14 @@ public class LottoTest {
     private static Stream<Arguments> lottoNumbersAndExpectedMatchCountWithWinningNumbers() {
         WinningNumbers winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6), 4);
         return Stream.of(
-                Arguments.arguments(winningNumbers, new LottoFactory(() -> List.of(1, 2, 3, 4, 5, 6)), 6, true),
-                Arguments.arguments(winningNumbers, new LottoFactory(() -> List.of(2, 3, 4, 5, 6, 7)), 5, true),
-                Arguments.arguments(winningNumbers, new LottoFactory(() -> List.of(3, 4, 5, 6, 7, 8)), 4, true),
-                Arguments.arguments(winningNumbers, new LottoFactory(() -> List.of(4, 5, 6, 7, 8, 9)), 3, true),
-                Arguments.arguments(winningNumbers, new LottoFactory(() -> List.of(5, 6, 7, 8, 9, 10)), 2, false),
-                Arguments.arguments(winningNumbers, new LottoFactory(() -> List.of(6, 7, 8, 9, 10, 11)), 1, false),
-                Arguments.arguments(winningNumbers, new LottoFactory(() -> List.of(7, 8, 9, 10, 11, 12)), 0, false),
-                Arguments.arguments(winningNumbers, new LottoFactory(() -> List.of(8, 9, 10, 11, 12, 13)), 0, false)
+                Arguments.arguments(winningNumbers, LottoFactory.generateManualLotto(List.of(1, 2, 3, 4, 5, 6)), 6, true),
+                Arguments.arguments(winningNumbers, LottoFactory.generateManualLotto(List.of(2, 3, 4, 5, 6, 7)), 5, true),
+                Arguments.arguments(winningNumbers, LottoFactory.generateManualLotto(List.of(3, 4, 5, 6, 7, 8)), 4, true),
+                Arguments.arguments(winningNumbers, LottoFactory.generateManualLotto(List.of(4, 5, 6, 7, 8, 9)), 3, true),
+                Arguments.arguments(winningNumbers, LottoFactory.generateManualLotto(List.of(5, 6, 7, 8, 9, 10)), 2, false),
+                Arguments.arguments(winningNumbers, LottoFactory.generateManualLotto(List.of(6, 7, 8, 9, 10, 11)), 1, false),
+                Arguments.arguments(winningNumbers, LottoFactory.generateManualLotto(List.of(7, 8, 9, 10, 11, 12)), 0, false),
+                Arguments.arguments(winningNumbers, LottoFactory.generateManualLotto(List.of(8, 9, 10, 11, 12, 13)), 0, false)
         );
     }
 
