@@ -1,5 +1,7 @@
 package domain;
 
+import util.LottoFactory;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -9,8 +11,8 @@ public class WinningNumbers {
     private final LottoNumber bonusNumber;
 
     public WinningNumbers(final List<Integer> winningNumbers, final int bonusNumber) {
+        this.winningLotto = LottoFactory.generateManualLotto(winningNumbers);
         this.bonusNumber = new LottoNumber(bonusNumber);
-        this.winningLotto = new Lotto(winningNumbers);
     }
 
     public Lotto getWinningLotto() {

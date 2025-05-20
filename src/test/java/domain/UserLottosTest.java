@@ -3,6 +3,7 @@ package domain;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import util.LottoFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -17,17 +18,26 @@ public class UserLottosTest {
     static void setUserLottos() {
         Amount amount = new Amount(6000);
 
-        List<Lotto> manualLottos = List.of(
-                new Lotto(List.of(1, 2, 3, 4, 5, 6)),
-                new Lotto(List.of(2, 3, 4, 5, 6, 7))
+        List<List<Integer>> manualNumberLists = List.of(
+                List.of(1, 2, 3, 4, 5, 6),
+                List.of(2, 3, 4, 5, 6, 7)
         );
 
-        List<Lotto> autoLottos = List.of(
-                new Lotto(List.of(3, 4, 5, 6, 7, 8)),
-                new Lotto(List.of(4, 5, 6, 7, 8, 9)),
-                new Lotto(List.of(5, 6, 7, 8, 9, 10)),
-                new Lotto(List.of(6, 7, 8, 9, 10, 11))
+        List<List<Integer>> autoNumberLists = List.of(
+                List.of(3, 4, 5, 6, 7, 8),
+                List.of(4, 5, 6, 7, 8, 9),
+                List.of(5, 6, 7, 8, 9, 10),
+                List.of(6, 7, 8, 9, 10, 11)
         );
+
+        List<Lotto> manualLottos = manualNumberLists.stream()
+                .map(LottoFactory::generateManualLotto)
+                .toList();
+
+        List<Lotto> autoLottos = autoNumberLists.stream()
+                .map(LottoFactory::generateManualLotto)
+                .toList();
+
 
         userLottos = UserLottos.Builder.builder()
                 .manualLottos(manualLottos)
@@ -36,7 +46,7 @@ public class UserLottosTest {
 
         winningNumbers = new WinningNumbers(List.of(1, 2, 3, 4, 5, 6), 7);
     }
-    
+
     @Test
     @DisplayName("userLottos의 getWinningResult() 메서드는, 유저가 소유한 로또의 당첨 결과를 반환한다.")
     void whenGivenFixedNumbersLotto_thenGetCorrespondingWinningResult() {

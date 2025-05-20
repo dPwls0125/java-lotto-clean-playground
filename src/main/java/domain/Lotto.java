@@ -6,17 +6,16 @@ import exception.lotto.InvalidLottoLengthException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class Lotto {
 
     private final List<LottoNumber> lottoNumbers;
 
-    public Lotto(final List<Integer> lottoNumbers) {
+    public Lotto(final List<LottoNumber> lottoNumbers) {
         validateLottoNumbersCount(lottoNumbers);
         validateLottoNumberIncludesDuplicateNumber(lottoNumbers);
-        this.lottoNumbers = new ArrayList<>(lottoNumbers.stream().map(LottoNumber::new).collect(Collectors.toList()));
+        this.lottoNumbers = new ArrayList<>(lottoNumbers);
     }
 
     public int countMatchedNumbers(final WinningNumbers winningNumbers) {
@@ -33,13 +32,13 @@ public class Lotto {
         return lottoNumbers.contains(winningNumbers.getBonusNumber());
     }
 
-    private void validateLottoNumbersCount(final List<Integer> lottoNumbers) {
+    private void validateLottoNumbersCount(final List<LottoNumber> lottoNumbers) {
         if (lottoNumbers.size() != LottoConstants.LOTTO_SIZE) {
             throw new InvalidLottoLengthException("로또가 가질 수 있는 숫자의 갯수는 6개입니다.");
         }
     }
 
-    private void validateLottoNumberIncludesDuplicateNumber(final List<Integer> lottoNumbers) {
+    private void validateLottoNumberIncludesDuplicateNumber(final List<LottoNumber> lottoNumbers) {
         if (lottoNumbers.stream().distinct().count() != lottoNumbers.size()) {
             throw new IllegalArgumentException("로또에 중복된 번호가 포함되어 있습니다.");
         }

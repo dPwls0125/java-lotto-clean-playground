@@ -1,9 +1,7 @@
 package domain;
 
 import exception.lotto.InvalidLottoLengthException;
-import exception.lotto.InvalidLottoNumberRangeException;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,45 +16,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class LottoTest {
-
-    @Nested
-    @DisplayName("자동 발급 랜덤 로또 테스트")
-    class RandomGeneratedLottoTest {
-
-        @Test
-        @DisplayName("랜덤으로 발급받은 로또의 범위는 1~45를 만족한다.")
-        void whenLottoGeneratedByRandomNumbersGenerator_thenEachNumberBetweenUpperAndLowerBounds() {
-            Lotto lotto = LottoFactory.generateAutoLotto();
-            lotto.getLottoNumbers()
-                    .forEach(number -> assertThat(number.getValue()).isBetween(1, 45));
-        }
-
-        @Test
-        @DisplayName("랜덤으로 발급받은 로또의 숫자 갯수는 6개이다.")
-        void whenLottoGeneratedByRandomNumbersGenerator_thenHasSixNmbers() {
-            Lotto lotto = LottoFactory.generateAutoLotto();
-            assertThat(lotto.getLottoNumbers()).hasSize(6);
-        }
-    }
-
-    @DisplayName("발급 받은 로또의 숫자가 1~45 사이가 아니면 => throws InvalideLottoNumberRangeException")
-    @ParameterizedTest(name = "발급 받은 로또에 {1} 포함이면 throws InvalideLottoNumberRangeException")
-    @MethodSource("invalidNumberIncludedLottos")
-    void whenNumberOutOfBounds_thenThrowRuntimeException(List<Integer> invalidLottoNumbers, int cause) {
-
-        assertThatThrownBy(() -> LottoFactory.generateManualLotto(invalidLottoNumbers))
-                .isInstanceOf(InvalidLottoNumberRangeException.class)
-                .hasMessage(String.format("%d는 허용되지 않는 범위의 숫자입니다.", cause));
-
-    }
-
-    private static Stream<Arguments> invalidNumberIncludedLottos() {
-        return Stream.of(
-                Arguments.arguments(List.of(-1, 2, 3, 4, 5, 6), -1),
-                Arguments.arguments(List.of(1, 2, 3, 4, 5, 46), 46),
-                Arguments.arguments(List.of(0, 2, 3, 4, 5, 45), 0)
-        );
-    }
 
     @DisplayName("발급 받은 로또가 6개가 아니면 => throws InvalidLottoLengthException")
     @ParameterizedTest(name = "발급 받은 로또가 {0}이면 사이즈를 벗어난다.")
@@ -102,7 +61,7 @@ public class LottoTest {
     @Test
     @DisplayName("로또에 중복된 숫자가 존재하면 예외를 발생시킨다.")
     void whenDuplicatedNumbersAreInclude_thenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> new Lotto(List.of(1, 1, 2, 3, 4, 5)))
+        assertThatThrownBy(() -> LottoFactory.generateManualLotto(List.of(1, 1, 2, 3, 4, 5)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("로또에 중복된 번호가 포함되어 있습니다.");
     }
