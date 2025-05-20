@@ -13,15 +13,15 @@ public class OutputView {
     private static final String LOSS = "손해";
     private static final String PROFIT = "이익";
 
-    public static void printNumberOfLottoes(TicketCount manualLottoCount, TicketCount purchasedticketCount) {
+    public static void printNumberOfLottoes(final TicketCount manualLottoCount, final TicketCount purchasedticketCount) {
         System.out.printf((NOTICE_MANUAL_AUTO_TICKET_COUNTS), manualLottoCount.getValue(), purchasedticketCount.getValue());
     }
 
-    public static void printIssuedLottoTickets(UserLottos userLottos) {
+    public static void printIssuedLottoTickets(final UserLottos userLottos) {
         userLottos.getUserLottos().forEach(System.out::println);
     }
 
-    public static void printWinningCorrespondResult(WinningResult winningResult) {
+    public static void printWinningCorrespondResult(final WinningResult winningResult) {
         System.out.println(NOTICE_WINNING_STATISTICS);
         System.out.println(TITLE_AND_CONTENT_DIVIDER);
 
@@ -36,18 +36,18 @@ public class OutputView {
         }
     }
 
-    public static void printStatistics(double yield, boolean isLoss) {
+    public static void printStatistics(final double yield, final boolean isLoss) {
         System.out.printf(NOTICE_TOTAL_PROFIT, yield, getLossOrProfit(isLoss));
     }
 
-    private static String getLossOrProfit(boolean isLoss) {
+    private static String getLossOrProfit(final boolean isLoss) {
         if (isLoss) {
             return LOSS;
         }
         return PROFIT;
     }
 
-    private static String getFormattedRankLine(LottoRank rank) {
+    private static String getFormattedRankLine(final LottoRank rank) {
         if (rank == LottoRank.SECOND) {
             return NOTICE_CORRESPOND_LOTTO_COUNT_AND_BONUS;
         }

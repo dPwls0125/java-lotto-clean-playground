@@ -19,7 +19,7 @@ public class Lotto {
         this.lottoNumbers = new ArrayList<>(lottoNumbers.stream().map(LottoNumber::new).collect(Collectors.toList()));
     }
 
-    public int countMatchedNumbers(WinningNumbers winningNumbers) {
+    public int countMatchedNumbers(final WinningNumbers winningNumbers) {
         int countMatchedNumber = 0;
         for (LottoNumber number : winningNumbers.getWinningLotto().getLottoNumbers()) {
             if (lottoNumbers.contains(number)) {
@@ -29,7 +29,7 @@ public class Lotto {
         return countMatchedNumber;
     }
 
-    public boolean isContainBonusBallNumber(WinningNumbers winningNumbers) {
+    public boolean isContainBonusBallNumber(final WinningNumbers winningNumbers) {
         return lottoNumbers.contains(winningNumbers.getBonusNumber());
     }
 

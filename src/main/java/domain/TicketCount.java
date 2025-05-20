@@ -12,7 +12,7 @@ public class TicketCount {
         this.value = value;
     }
 
-    public void subtractTicketCount(TicketCount ticketCount) {
+    public void subtractTicketCount(final TicketCount ticketCount) {
         int substractResult = value - ticketCount.getValue();
         if (substractResult < 0) {
             throw new IllegalArgumentException("차감 가능한 티켓의 갯수를 초과했습니다.");
@@ -20,13 +20,13 @@ public class TicketCount {
         this.value = substractResult;
     }
 
-    private void validateNumberLowerBound(int value) {
+    private void validateNumberLowerBound(final int value) {
         if (value <= 0) {
             throw new IllegalArgumentException("티켓의 갯수는 0 또는 음수가 될 수 없습니다.");
         }
     }
 
-    public static TicketCount from(Amount amount) {
+    public static TicketCount from(final Amount amount) {
         return new TicketCount(amount.getValue() / LottoConstants.LOTTO_PRICES_UNIT);
     }
 

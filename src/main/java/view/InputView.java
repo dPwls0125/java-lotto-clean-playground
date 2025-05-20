@@ -25,7 +25,7 @@ public class InputView {
         return optionalAmount.get();
     }
 
-    public static TicketCount induceManulLottoCountToBeEntered(TicketCount purchasedticketCount) {
+    public static TicketCount induceManulLottoCountToBeEntered(final TicketCount purchasedticketCount) {
         Optional<TicketCount> manualLottoCount = Optional.empty();
         while (manualLottoCount.isEmpty()) {
             System.out.println(ENTER_MANUAL_LOTTO_COUNT);
@@ -35,7 +35,7 @@ public class InputView {
         return manualLottoCount.get();
     }
 
-    public static List<List<Integer>> readManualLottoNumbers(TicketCount count) {
+    public static List<List<Integer>> readManualLottoNumbers(final TicketCount count) {
         System.out.println(ENTER_MANUAL_LOTTO_NUMBERS);
         List<List<Integer>> manualNumbers = new ArrayList<>();
         for (int i = 0; i < count.getValue(); i++) {

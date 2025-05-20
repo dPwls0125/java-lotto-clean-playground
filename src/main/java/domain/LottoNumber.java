@@ -9,12 +9,12 @@ public class LottoNumber {
 
     private final int lottoNumber;
 
-    public LottoNumber(int lottoNumber) {
+    public LottoNumber(final int lottoNumber) {
         validateNumberRange(lottoNumber);
         this.lottoNumber = lottoNumber;
     }
 
-    private void validateNumberRange(int number) {
+    private void validateNumberRange(final int number) {
         if (number < LottoConstants.LOTTO_LOWER_BOUND || number > LottoConstants.LOTTO_UPPER_BOUND) {
             throw new InvalidLottoNumberRangeException(String.format("%d는 허용되지 않는 범위의 숫자입니다.", number));
         }
