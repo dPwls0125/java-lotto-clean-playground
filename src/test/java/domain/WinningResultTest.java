@@ -28,9 +28,9 @@ public class WinningResultTest {
     @Test
     @DisplayName("자신(winningResult)의 결과를 기반으로 yield 값을 반환한다.")
     void getYield_ReturnCorrectYieldValue() {
-        WinningResult result = new WinningResult(Map.of(LottoRank.FIRST, 1));
+        WinningResult result = new WinningResult(Map.of(LottoRank.FIRST, 3));
 
-        Amount amount = new Amount(1000);
+        Amount amount = new Amount(3000);
         double yield = result.getYield(amount);
 
         assertThat(yield).isEqualTo(2_000_000);
